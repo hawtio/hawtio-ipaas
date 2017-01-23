@@ -20,10 +20,6 @@ export class ConnectionsListPage implements OnInit {
     this.connections = store.list;
   }
 
-  get debug() {
-    return JSON.stringify(this.connections);
-  }
-
   ngOnInit() {
     this.store.loadAll();
   }
