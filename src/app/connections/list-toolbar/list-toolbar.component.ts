@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-//import { Observable } from 'rxjs/Observable';
+ //import { Observable } from 'rxjs/Observable';
 
-//import { ConnectionStore } from '../../store/connection/connection.store';
-//import { Connections } from '../../store/connection/connection.model';
+ //import { ConnectionStore } from '../../store/connection/connection.store';
+ //import { Connections } from '../../store/connection/connection.model';
 
 import { FilterTextService } from '../../common/filter-text/filter-text.service';
 
@@ -12,7 +12,7 @@ import { FilterTextService } from '../../common/filter-text/filter-text.service'
   styleUrls: ['./list-toolbar.component.scss'],
 })
 export class ConnectionsListToolbarComponent {
-  //filteredConnections: any[] = [];
+   //filteredConnections: any[] = [];
 
   @Input() filteredConnections;
 
@@ -31,7 +31,7 @@ export class ConnectionsListToolbarComponent {
     console.log('searchText: ' + JSON.stringify(searchText));
 
     // Service requires an array, not an Observable. Need to susbscribe.
-    //this.filteredConnections = this.filterService.filter(searchText, ['id', 'name'], this.store.list);
+     //this.filteredConnections = this.filterService.filter(searchText, ['id', 'name'], this.store.list);
 
     this.filteredConnections = this.filterService.filter(searchText, ['id', 'name'], this.filteredConnections);
   }

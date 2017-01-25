@@ -8,7 +8,7 @@ import { Connections } from '../../store/connection/connection.model';
   styleUrls: ['./list.component.scss'],
 })
 export class ConnectionsListComponent {
-  //filteredConnections: any[] = [];
+   //filteredConnections: any[] = [];
 
   truncateLimit = 80;
 
@@ -20,7 +20,7 @@ export class ConnectionsListComponent {
   @Input() loading: boolean;
 
   constructor() { }
-  //constructor(private filterService: FilterTextService) { }
+   //constructor(private filterService: FilterTextService) { }
 
   /*
   filterChanged(searchText: string) {
