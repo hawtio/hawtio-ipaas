@@ -17,7 +17,7 @@ export class FilterTextService {
       console.log('props: ' + JSON.stringify(props));
       console.log('originalList: ' + JSON.stringify(originalList));
 
-      //const filtered = originalList.filter(item => {
+      // const filtered = originalList.filter(item => {
       filteredList = originalList.filter(item => {
         let match = false;
 
@@ -38,7 +38,7 @@ export class FilterTextService {
 
       });
 
-      //filteredList = filtered;
+      // filteredList = filtered;
 
       /*
       filteredList = originalList.map(content => response.json().data)
