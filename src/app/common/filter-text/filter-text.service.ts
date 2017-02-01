@@ -38,7 +38,7 @@ export class FilterTextService {
 
       });
 
-      // filteredList = filtered;
+      //filteredList = filtered;
 
       /*
       filteredList = originalList.map(content => response.json().data)
