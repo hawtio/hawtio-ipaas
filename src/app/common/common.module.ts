@@ -21,10 +21,12 @@ import { FilterTextService } from './filter-text/filter-text.service';
     LoadingComponent,
     FilterTextComponent,
   ],
+  providers: [FilterTextService],
   exports: [
     TruncateCharactersPipe,
     TruncateWordsPipe,
     LoadingComponent,
+    FilterTextComponent,
   ],
 })
 export class IPaaSCommonModule {
