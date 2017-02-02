@@ -42,7 +42,7 @@ export class ConnectionsListToolbarComponent {
     // The above filter returns the correct list from the filter service, so passing.
 
 
-    // this.filteredConnections = this.filterService.filter(searchText, ['id', 'name'],
+    ///this.filteredConnections = this.filterService.filter(searchText, ['id', 'name'],
     // this.filteredConnections);
 
     /*
