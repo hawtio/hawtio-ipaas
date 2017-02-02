@@ -1,4 +1,5 @@
 <div class='connections list'>
-  <ipaas-connections-list-toolbar></ipaas-connections-list-toolbar>
-  <ipaas-connections-list [connections]="connections | async" [loading]="loading | async"></ipaas-connections-list>
+  <ipaas-connections-list-toolbar [filteredConnections]="connections | async"></ipaas-connections-list-toolbar>
+  <ipaas-connections-list [connections]="connections | async"
+                          [loading]="loading | async"></ipaas-connections-list>
 </div>
