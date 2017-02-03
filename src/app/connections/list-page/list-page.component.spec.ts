@@ -1,39 +1,32 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockBackend } from '@angular/http/testing';
-import { RequestOptions, BaseRequestOptions, Http } from '@angular/http';
-import { RestangularModule } from 'ng2-restangular';
 
 import { IPaaSCommonModule } from '../../common/common.module';
-import { ConnectionsListPage } from './list-page.component';
 import { ConnectionsListComponent } from '../list/list.component';
+import { ConnectionsListPageComponent } from './list-page.component';
 import { ConnectionsListToolbarComponent } from '../list-toolbar/list-toolbar.component';
-import { StoreModule } from '../../store/store.module';
 
-describe('ConnectionListPage', () => {
-  let component: ConnectionsListPage;
-  let fixture: ComponentFixture<ConnectionsListPage>;
+describe('ConnectionsListComponent', () => {
+  let component: ConnectionsListPageComponent;
+  let fixture: ComponentFixture<ConnectionsListPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [IPaaSCommonModule, StoreModule, RouterTestingModule.withRoutes([]), RestangularModule.forRoot()],
-      declarations: [ConnectionsListPage, ConnectionsListComponent, ConnectionsListToolbarComponent],
-      providers: [
-        MockBackend,
-        { provide: RequestOptions, useClass: BaseRequestOptions },
-        {
-          provide: Http, useFactory: (backend, options) => {
-            return new Http(backend, options);
-          }, deps: [MockBackend, RequestOptions],
-        },
+      imports: [IPaaSCommonModule, RouterTestingModule.withRoutes([])],
+      declarations: [
+        ConnectionsListComponent,
+        ConnectionsListPageComponent,
+        ConnectionsListToolbarComponent,
       ],
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ConnectionsListPage);
+    fixture = TestBed.createComponent(ConnectionsListPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -42,3 +35,4 @@ describe('ConnectionListPage', () => {
     expect(component).toBeTruthy();
   });
 });
+

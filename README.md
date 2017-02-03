@@ -153,6 +153,10 @@ For a list of common commands, see [here](/docs/commands.md).
 
 For a list of common commands, see [here](/docs/commands.md).
 
+### Linting
+
+To run the linter: `yarn lint`
+
 ## Configuring
 
 Configuration files live in `/config`. Configuration files are currently available for Webpack, Karma, and Protractor.

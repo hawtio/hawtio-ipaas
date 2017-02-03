@@ -9,7 +9,7 @@ import { ConnectionStore } from '../../store/connection/connection.store';
   templateUrl: './view-page.component.html',
   styleUrls: ['./view-page.component.scss'],
 })
-export class ConnectionViewPage implements OnDestroy {
+export class ConnectionViewPageComponent implements OnDestroy {
   private idSubscription: Subscription;
 
   constructor(store: ConnectionStore, route: ActivatedRoute) {
