@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { IPaaSCommonModule } from '../common/common.module';
-import { ConnectionsListPage } from './list-page/list-page.component';
+import { ConnectionsListPageComponent } from './list-page/list-page.component';
 import { ConnectionsListToolbarComponent } from './list-toolbar/list-toolbar.component';
 import { ConnectionsListComponent } from './list/list.component';
-import { ConnectionViewPage } from './view-page/view-page.component';
+import { ConnectionViewPageComponent } from './view-page/view-page.component';
 import { ConnectionViewWrapperComponent } from './view-wrapper/view-wrapper.component';
 import { ConnectionViewToolbarComponent } from './view-toolbar/view-toolbar.component';
 import { ConnectionViewComponent } from './view/view.component';
 
 const routes: Routes = [
-  { path: '', component: ConnectionsListPage, pathMatch: 'full' },
-  { path: ':id', component: ConnectionViewPage, pathMatch: 'full' },
+  { path: '', component: ConnectionsListComponent, pathMatch: 'full' },
+  { path: ':id', component: ConnectionViewPageComponent, pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -25,10 +25,10 @@ const routes: Routes = [
     IPaaSCommonModule,
   ],
   declarations: [
-    ConnectionsListPage,
+    ConnectionsListPageComponent,
     ConnectionsListToolbarComponent,
     ConnectionsListComponent,
-    ConnectionViewPage,
+    ConnectionViewPageComponent,
     ConnectionViewWrapperComponent,
     ConnectionViewToolbarComponent,
     ConnectionViewComponent,

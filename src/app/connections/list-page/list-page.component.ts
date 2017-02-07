@@ -1,7 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-
-import { ConnectionStore } from '../../store/connection/connection.store';
+import { Component, Input } from '@angular/core';
 import { Connections } from '../../store/connection/connection.model';
 
 @Component({
@@ -9,19 +6,14 @@ import { Connections } from '../../store/connection/connection.model';
   templateUrl: './list-page.component.html',
   styleUrls: ['./list-page.component.scss'],
 })
-export class ConnectionsListPage implements OnInit {
+export class ConnectionsListPageComponent {
 
-  connections: Observable<Connections>;
+  @Input() connectionList;
+  @Input() loading: boolean;
 
-  loading: Observable<boolean>;
+  truncateLimit = 80;
+  truncateTrail = '…';
 
-  constructor(private store: ConnectionStore) {
-    this.loading = store.loading;
-    this.connections = store.list;
-  }
-
-  ngOnInit() {
-    this.store.loadAll();
-  }
+  constructor() {}
 
 }

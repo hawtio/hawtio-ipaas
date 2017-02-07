@@ -7,15 +7,15 @@ import { MockBackend } from '@angular/http/testing';
 import { RequestOptions, BaseRequestOptions, Http } from '@angular/http';
 import { RestangularModule } from 'ng2-restangular';
 
-import { ConnectionViewPage } from './view-page.component';
+import { ConnectionViewPageComponent } from './view-page.component';
 import { ConnectionViewWrapperComponent } from '../view-wrapper/view-wrapper.component';
 import { ConnectionViewToolbarComponent } from '../view-toolbar/view-toolbar.component';
 import { ConnectionViewComponent } from '../view/view.component';
 import { StoreModule } from '../../store/store.module';
 
 describe('ConnectionViewPage', () => {
-  let component: ConnectionViewPage;
-  let fixture: ComponentFixture<ConnectionViewPage>;
+  let component: ConnectionViewPageComponent;
+  let fixture: ComponentFixture<ConnectionViewPageComponent>;
 
   beforeEach(async(() => {
     TestBed
@@ -26,7 +26,7 @@ describe('ConnectionViewPage', () => {
           RestangularModule.forRoot(),
         ],
         declarations: [
-          ConnectionViewPage,
+          ConnectionViewPageComponent,
           ConnectionViewWrapperComponent,
           ConnectionViewToolbarComponent,
           ConnectionViewComponent,
@@ -45,7 +45,7 @@ describe('ConnectionViewPage', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ConnectionViewPage);
+    fixture = TestBed.createComponent(ConnectionViewPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
