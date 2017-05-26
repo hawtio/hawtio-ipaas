@@ -131,7 +131,7 @@
 
                   <!-- Not OK Status -->
 
-                  <template #statTemplate>{{integration.statusMessage}}</template>
+                  <ng-template #statTemplate>{{integration.statusMessage}}</ng-template>
                   <i *ngIf="integration.statusMessage"
                      class="pficon pficon-error-circle-o"
                      [tooltip]="statTemplate"
@@ -151,7 +151,7 @@
                             aria-expanded="true">
                       <span class="fa fa-ellipsis-v"></span>
                     </button>
-                    <ul dropdownMenu
+                    <ul *dropdownMenu
                         class="dropdown-menu dropdown-menu-right"
                         aria-labelledby="dropdownKebabRight9">
                       <li>

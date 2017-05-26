@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ToasterService } from 'angular2-toaster';
 
 import { log, getCategory } from '../logging';
@@ -93,7 +93,7 @@ export class DashboardIntegrationsComponent implements OnInit {
     const inactive = [];
     let total = 0;
 
-    this.integrations.forEach(function(a) {
+    (this.integrations || []).forEach(function(a) {
       /* TODO - too noisy
       log.debugc(() => 'Integration: ' + JSON.stringify(a));
       log.debugc(() => 'currentStatus: ' + JSON.stringify(a.currentStatus));

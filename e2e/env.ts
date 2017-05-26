@@ -5,7 +5,7 @@ module.exports = function () {
   // see list of available hooks here
   // https://github.com/cucumber/cucumber-js/blob/master/docs/support_files/event_handlers.md
 
-  this.setDefaultTimeout(400 * 1000);
+  this.setDefaultTimeout(400 * 10000);
 
   // todo figure out proper browser restart
   // this.BeforeFeature(function (event, callback) {

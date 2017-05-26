@@ -1,13 +1,11 @@
 <div class="syndesis-dashboard">
-  
+
   <!-- At Least One Integration -->
-  
-  <syndesis-dashboard-integrations *ngIf="integrations.length !== 0"
-                               [integrations]="integrations | async"
-                               [loading]="loading | async"></syndesis-dashboard-integrations>
-  
+
+  <syndesis-dashboard-integrations [integrations]="integrations | async"
+                                   [loading]="loading | async"></syndesis-dashboard-integrations>
+
   <!-- No Integrations -->
-  
-  <syndesis-dashboard-empty-state *ngIf="integrations.length === 0"
-                               [loading]="loading | async"></syndesis-dashboard-empty-state>
+
+  <syndesis-dashboard-empty-state [loading]="loading | async"></syndesis-dashboard-empty-state>
 </div>

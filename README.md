@@ -6,6 +6,48 @@ The front end application or UI for Syndesis - a flexible, customizable, cloud-h
 
 For the middle tier API that this client communicates with, please see the [syndesis-rest](https://github.com/syndesisio/syndesis-rest) repo.
 
+## UI Developer Quick Start
+
+**Make sure you have installed [node](https://nodejs.org/en/download/) version >= 6.x.x and [Yarn](https://yarnpkg.com/en/docs/install) version >= 0.18.1**
+
+First get a developer deployment of Syndesis running in a minishift enviorment as described in the 
+[Syndesis Quickstart](https://syndesis.io/quickstart/).  Then do the following to get a local developer UI with hot reloading running against the Syndesis backend running in minishift:
+
+```bash
+# clone our repo
+git clone https://github.com/syndesisio/syndesis-ui.git
+
+# change directory to Syndesis
+cd syndesis-ui
+
+# Configure the UI
+sed "s/192.168.64.2/$(minishift ip)/" src/config.json.minishift > src/config.json
+
+# install the dependencies
+yarn
+
+# start the server
+yarn start
+```
+
+Go to [http://0.0.0.0:4200](http://0.0.0.0:4200) or [http://localhost:4200](http://localhost:4200) in your browser.
+
+## Table of Contents
+
+* [Technology Stack](#technology-stack)
+* [File Structure](#file-structure)
+* [Getting Started](#getting-started)
+  * [Dependencies](#dependencies)
+  * [Installing](#installing)
+  * [Running](#running)
+  * [Testing](#testing)
+  * [Configuring](#configuring)
+* [Contributing](#contributing)
+* [Resources](#resources)
+* [Data Mapper Updates](#data-mapper)
+
+### Technology Stack
+
 Included in this stack are the following technologies:
 
 * Language: [TypeScript](http://www.typescriptlang.org) (JavaScript with @Types)
@@ -17,44 +59,6 @@ Included in this stack are the following technologies:
 * Logging: [typescript-logging](https://github.com/mreuvers/typescript-logging) (TypeScript Logging)
 * Code Analysis: [Codelyzer](https://github.com/mgechev/codelyzer) (TsLint rules for static code analysis of Angular 2 TypeScript projects)
 * Charts: [ng2-charts](https://github.com/valor-software/ng2-charts) (Data Visualization)
-
-## Quick Start
-
-**Make sure you have node version >= 6.x.x and Yarn version >= 0.18.1**
-
-Clone/download the repo start editing `app.component.ts` inside [`/src/app/`](/src/app/app.component.ts)
-
-```bash
-# clone our repo
-git clone https://github.com/syndesisio/syndesis-ui.git
-
-# change directory to Syndesis
-cd syndesis-ui
-
-# install the dependencies
-yarn
-
-# start the server
-yarn start
-
-# or start the server with angular-cli:
-ng serve
-```
-
-Go to [http://0.0.0.0:4200](http://0.0.0.0:4200) or [http://localhost:4200](http://localhost:4200) in your browser.
-
-## Table of Contents
-
-* [File Structure](#file-structure)
-* [Getting Started](#getting-started)
-  * [Dependencies](#dependencies)
-  * [Installing](#installing)
-  * [Running](#running)
-  * [Testing](#testing)
-  * [Configuring](#configuring)
-* [Contributing](#contributing)
-* [Resources](#resources)
-* [Data Mapper Updates](#data-mapper)
 
 ### File Structure
 

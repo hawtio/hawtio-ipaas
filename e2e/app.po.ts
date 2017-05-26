@@ -3,7 +3,7 @@ import * as webdriver from 'selenium-webdriver';
 import { Promise as P } from 'es6-promise';
 import { User, UserDetails } from './common/common';
 import { contains } from './common/world';
-import { GithubLogin, KeycloakDetails } from './login/login.po';
+import { GithubLogin, KeycloakDetails, OpenShiftAuthorize } from './login/login.po';
 import { log } from '../src/app/logging';
 import * as jQuery from 'jquery';
 import WebElement = webdriver.WebElement;
@@ -103,7 +103,9 @@ export class AppPage {
 
   clickButton(buttonTitle: string): P<any> {
     log.info(`clicking button ${buttonTitle}`);
-    return this.getButton(buttonTitle).click();
+    const buttonElement = this.getButton(buttonTitle);
+    this.waitForElementToBePresent(buttonElement);
+    return buttonElement.click();
   }
 
   getLink(linkTitle: string): ElementFinder {
@@ -149,13 +151,18 @@ export class AppPage {
   async login(user: User): P<any> {
     // need to disable angular wait before check for current url because we're being redirected outside of angular
     browser.waitForAngularEnabled(false);
-
     await this.goToUrl(AppPage.baseurl);
 
     let currentUrl = await browser.getCurrentUrl();
-    if (contains(currentUrl, 'github.com/login')) {
+    const isAppLoaded = await this.rootElement.element(by.css('span.username')).isPresent();
+    if (contains(currentUrl, 'github.com/login') || !isAppLoaded) {
       log.info('GitHub login page');
       await new GithubLogin().login(user);
+    }
+    currentUrl = await browser.getCurrentUrl();
+    if (contains(currentUrl, 'oauth/authorize/approve')) {
+      log.info('Authorize access login page');
+      await new OpenShiftAuthorize().authorizeAccess();
     }
     currentUrl = await browser.getCurrentUrl();
     if (contains(currentUrl, 'auth/realms')) {
@@ -188,6 +195,16 @@ export class AppPage {
         callback(data);
       });
     }).then(jsonString => JSON.parse(<string> jsonString));
+  }
+
+  waitForElementToBePresent(element) {
+    browser.wait(function () {
+        return element.isPresent();
+    }, 60000);
+
+    browser.wait(function () {
+        return element.isDisplayed();
+    }, 60000);
   }
 
   async getApiUrl(): P<string> {
