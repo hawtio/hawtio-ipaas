@@ -51,9 +51,9 @@ class IntegrationSteps {
   }
 
   @when(/^she selects "([^"]*)" integration action$/)
-  public selectIntegrationAction(action: string, callback): void {
+  public selectIntegrationAction(action: string): P<any> {
     const page = new ListActionsComponent();
-    page.selectAction(action).then(() => callback());
+    return page.selectAction(action);
   }
 
   @when(/^Camilla deletes the "([^"]*)" integration*$/)
