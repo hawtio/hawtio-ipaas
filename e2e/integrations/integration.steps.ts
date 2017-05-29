@@ -5,8 +5,7 @@ import { binding, then, when } from 'cucumber-tsflow';
 import { CallbackStepDefinition } from 'cucumber';
 import { expect, P, World } from '../common/world';
 import { IntegrationEditPage, ListActionsComponent } from '../integrations/edit/edit.po';
-import { IntegrationConfigureFilterStepPage, IntegrationConfigureLogStepPage } from '../integrations/edit/edit.po';
-import { IntegrationConfigureStepPage, IntegrationAddStepPage } from '../integrations/edit/edit.po';
+import { IntegrationAddStepPage, StepFactory } from '../integrations/edit/edit.po';
 import { log } from '../../src/app/logging';
 import { IntegrationsListPage, IntegrationsListComponent } from '../integrations/list/list.po';
 
@@ -85,11 +84,14 @@ class IntegrationSteps {
       .to.eventually.be.true.notify(callback);
   }
 
-  @then(/^she is presented with a step configure page$/)
-  public configureStepPageOpen(callback: CallbackStepDefinition): void {
-    const page = new IntegrationConfigureStepPage();
+  @then(/^she is presented with a "([^"]*)" step configure page$/)
+  public configureStepPageOpen(stepType: string): void {
+    const stepFactory = new StepFactory();
+    const page = stepFactory.getStep(stepType, '');
     expect(page.rootElement().isPresent(), 'there must be add step page root element')
-      .to.eventually.be.true.notify(callback);
+      .to.eventually.be.true;
+    expect(page.validate(), 'page must contain certain elements')
+      .to.eventually.be.true;
   }
 
   @then(/^she selects "([^"]*)" step$/)
@@ -99,20 +101,11 @@ class IntegrationSteps {
     return page.addStep(stepName);
   }
 
-  @then(/fill configure page for log step with "([^"]*)" message$/)
-  public fillLogStepConfigure (message: string, callback: CallbackStepDefinition): void {
-    const page = new IntegrationConfigureLogStepPage(message);
-    expect(page.getMessageInput().isPresent(), 'there must input for log message')
-      .to.eventually.be.true.notify(callback);
-    page.fillConfiguration();
-  }
-
-  @then(/fill configure page for filter step with "([^"]*)" condition$/)
-  public fillFilterStepConfigure (condition: string, callback: CallbackStepDefinition): void {
-    const page = new IntegrationConfigureFilterStepPage(condition);
-    expect(page.getFilterDefinitioTextArea().isPresent(), 'there must text area for filter definition')
-      .to.eventually.be.true.notify(callback);
-    page.fillConfiguration();
+  @then(/^she fill configure page for "([^"]*)" step with "([^"]*)" parameter$/)
+  public fillStepConfiguration (stepType: string, paremeter: string): P<any> {
+    const stepFactory = new StepFactory();
+    const page = stepFactory.getStep(stepType, paremeter);
+    return page.fillConfiguration();
   }
 }
 

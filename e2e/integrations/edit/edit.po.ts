@@ -122,10 +122,31 @@ export class IntegrationAddStepPage implements SyndesisComponent {
   }
 }
 
-export class IntegrationConfigureStepPage implements SyndesisComponent {
+export class StepFactory {
+
+  getStep(stepType: string, parameter: string): IntegrationConfigureStepPage {
+    if (stepType == null) {
+      return null;
+    }
+    if (stepType.toUpperCase() === 'LOG') {
+      return new IntegrationConfigureLogStepPage(parameter);
+    } else if (stepType.toUpperCase() === 'FILTER') {
+      return new IntegrationConfigureFilterStepPage(parameter);
+    }
+
+    return null;
+  }
+}
+
+export abstract class IntegrationConfigureStepPage implements SyndesisComponent {
   rootElement(): ElementFinder {
+    log.debug(`getting root element for step configuration page`);
     return element(by.css('syndesis-integrations-step-configure'));
   }
+
+  abstract fillConfiguration(): P<any>;
+
+  abstract validate(): P<any>;
 }
 
 export class IntegrationConfigureLogStepPage extends IntegrationConfigureStepPage {
@@ -138,17 +159,22 @@ export class IntegrationConfigureLogStepPage extends IntegrationConfigureStepPag
     this.logMessage = logMessage;
   }
 
-  fillConfiguration(): void {
-    this.setMessage(this.logMessage);
+  fillConfiguration(): P<any> {
+    return this.setMessage(this.logMessage);
+  }
+
+  validate(): P<any> {
+    log.debug(`validating configuration page`);
+    return this.getMessageInput().isPresent();
   }
 
   setMessage(message: string): P<any> {
-    log.debug(`setting integration step message to ${message}`);
+    log.info(`setting integration step message to ${message}`);
     return this.rootElement().$(IntegrationConfigureLogStepPage.messageSelector).sendKeys(message);
   }
 
   getMessageInput(): ElementFinder {
-    log.info(`searching for message input`);
+    log.debug(`searching for message input`);
     return this.rootElement().$(IntegrationConfigureLogStepPage.messageSelector);
   }
 }
@@ -163,17 +189,22 @@ export class IntegrationConfigureFilterStepPage extends IntegrationConfigureStep
     this.filterCondition = filterCondition;
   }
 
-  fillConfiguration(): void {
-    this.setFilter(this.filterCondition);
+  fillConfiguration(): P<any> {
+    return this.setFilter(this.filterCondition);
+  }
+
+  validate(): P<any> {
+    log.debug(`validating configuration page`);
+    return this.getFilterDefinitioTextArea().isPresent();
   }
 
   setFilter(filterCondition: string): P<any> {
-    log.debug(`setting integration filter step condition to ${filterCondition}`);
+    log.info(`setting integration filter step condition to ${filterCondition}`);
     return this.rootElement().$(IntegrationConfigureFilterStepPage.filterSelector).sendKeys(filterCondition);
   }
 
   getFilterDefinitioTextArea(): ElementFinder {
-    log.info(`searching filter definition text area`);
+    log.debug(`searching filter definition text area`);
     return this.rootElement().$(IntegrationConfigureFilterStepPage.filterSelector);
   }
 }

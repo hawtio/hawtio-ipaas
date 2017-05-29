@@ -2,6 +2,10 @@
 Feature: Test to verify advanced integration with multiple steps
   https://issues.jboss.org/browse/IPAAS-287
   
+  Scenario: First pass at login, homepage
+    When "Camilla" logs into the Syndesis URL for her installation (e.g. rh-syndesis.[openshift online domain].com)
+    Then Camilla is presented with the Syndesis page "Dashboard"
+  
   Scenario: Create integration with one step
     When "Camilla" navigates to the "Home" page
     And clicks on the "Create Integration" button to create a new integration.
@@ -18,8 +22,8 @@ Feature: Test to verify advanced integration with multiple steps
     
     When Camilla click on the "Add a Step" button
     Then she selects "Filter" step
-    And she is presented with a step configure page
-    Then she fill configure page for filter step with "filter" condition
+    And she is presented with a "Filter" step configure page
+    Then she fill configure page for "Filter" step with "filter" parameter
     And click on the "Next" button
     
     When click on the "Save" button
@@ -48,16 +52,16 @@ Feature: Test to verify advanced integration with multiple steps
     When Camilla click on the "Add a Step" button
     Then she is presented with a add step page
     Then she selects "Log" step
-    And she is presented with a step configure page
-    Then she fill configure page for log step with "log" message
+    And she is presented with a "Log" step configure page
+    Then she fill configure page for "Log" step with "log" parameter
     And click on the "Next" button
     
     When Camilla clicks on the "Add a Step" button
     Then Camilla is presented with the "Add a step" link
     And clicks on the "Add a step" link
     Then she selects "Filter" step
-    And she is presented with a step configure page
-    Then she fill configure page for filter step with "filter" condition
+    And she is presented with a "Filter" step configure page
+    Then she fill configure page for "Filter" step with "filter" parameter
     And click on the "Next" button
     
     When click on the "Save" button
