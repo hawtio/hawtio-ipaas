@@ -8,7 +8,6 @@ import { Promise as P } from 'es6-promise';
 import { expect, World } from './world';
 import { User, UserDetails } from './common';
 import { log } from '../../src/app/logging';
-import { IntegrationsListPage, IntegrationsListComponent } from '../integrations/list/list.po';
 import { DashboardPage } from '../dashboard/dashboard.po';
 /**
  * Generic steps that can be used in various features
@@ -176,20 +175,6 @@ class CommonSteps {
       .to.eventually.be.false.notify(callback);
   }
 
-  @when(/^Camilla deletes the "([^"]*)" integration*$/)
-  public deleteIntegration(integrationName: string): P<any> {
-    const listComponent = new IntegrationsListComponent();
-    return this.world.app.clickDeleteIntegration(integrationName, listComponent.rootElement());
-  }
-
-  @then(/^Camilla can not see "([^"]*)" integration anymore$/)
-  public expectIntegrationPresent(name: string, callback: CallbackStepDefinition): void {
-    log.info(`Verifying if integration ${name} is present`);
-    const page = new IntegrationsListPage();
-    expect(page.listComponent().isIntegrationPresent(name), `Integration ${name} must be present`)
-      .to.eventually.be.false.notify(callback);
-  }
-
   @when(/^Camilla deletes the "([^"]*)" integration in top 5 integrations$/)
   public deleteIntegrationOnDashboard(integrationName: string): P<any> {
     log.info(`Trying to delete ${integrationName} on top 5 integrations table`);
@@ -204,6 +189,7 @@ class CommonSteps {
     expect(dashboard.isIntegrationPresent(name), `Integration ${name} must be present`)
       .to.eventually.be.false.notify(callback);
   }
+
 
   /**
    * Scroll the webpage.

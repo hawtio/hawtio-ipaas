@@ -1,5 +1,6 @@
 import { SyndesisComponent } from '../../common/common';
 import { element, by, ElementFinder } from 'protractor';
+import { CallbackStepDefinition } from 'cucumber';
 import { P } from '../../common/world';
 import { ConnectionsListComponent } from '../../connections/list/list.po';
 import { log } from '../../../src/app/logging';
@@ -78,7 +79,7 @@ export class IntegrationBasicsComponent implements SyndesisComponent {
   }
 
   setName(name: string): P<any> {
-    log.debug(`setting integration nae to ${name}`);
+    log.debug(`setting integration name to ${name}`);
     return this.rootElement().$(IntegrationBasicsComponent.nameSelector).sendKeys(name);
   }
 
@@ -108,6 +109,104 @@ export class IntegrationEditPage implements SyndesisComponent {
   }
 
 
+}
+
+export class IntegrationAddStepPage implements SyndesisComponent {
+  rootElement(): ElementFinder {
+    return element(by.css('syndesis-integrations-step-select'));
+  }
+
+  addStep(stepName: string): P<any> {
+    log.info(`searching for step ${stepName}`);
+    return this.rootElement().element(by.cssContainingText('div.list-group-item-heading', stepName)).getWebElement().click();
+  }
+}
+
+export class StepFactory {
+
+  getStep(stepType: string, parameter: string): IntegrationConfigureStepPage {
+    if (stepType == null) {
+      return null;
+    }
+    if (stepType.toUpperCase() === 'LOG') {
+      return new IntegrationConfigureLogStepPage(parameter);
+    } else if (stepType.toUpperCase() === 'FILTER') {
+      return new IntegrationConfigureFilterStepPage(parameter);
+    }
+
+    return null;
+  }
+}
+
+export abstract class IntegrationConfigureStepPage implements SyndesisComponent {
+  rootElement(): ElementFinder {
+    log.debug(`getting root element for step configuration page`);
+    return element(by.css('syndesis-integrations-step-configure'));
+  }
+
+  abstract fillConfiguration(): P<any>;
+
+  abstract validate(): P<any>;
+}
+
+export class IntegrationConfigureLogStepPage extends IntegrationConfigureStepPage {
+  static readonly messageSelector = 'input[name="message"]';
+
+  logMessage: string;
+
+  constructor(logMessage: string) {
+    super();
+    this.logMessage = logMessage;
+  }
+
+  fillConfiguration(): P<any> {
+    return this.setMessage(this.logMessage);
+  }
+
+  validate(): P<any> {
+    log.debug(`validating configuration page`);
+    return this.getMessageInput().isPresent();
+  }
+
+  setMessage(message: string): P<any> {
+    log.info(`setting integration step message to ${message}`);
+    return this.rootElement().$(IntegrationConfigureLogStepPage.messageSelector).sendKeys(message);
+  }
+
+  getMessageInput(): ElementFinder {
+    log.debug(`searching for message input`);
+    return this.rootElement().$(IntegrationConfigureLogStepPage.messageSelector);
+  }
+}
+
+export class IntegrationConfigureFilterStepPage extends IntegrationConfigureStepPage {
+  static readonly filterSelector = 'textarea[name="filter"]';
+
+  filterCondition: string;
+
+  constructor(filterCondition: string) {
+    super();
+    this.filterCondition = filterCondition;
+  }
+
+  fillConfiguration(): P<any> {
+    return this.setFilter(this.filterCondition);
+  }
+
+  validate(): P<any> {
+    log.debug(`validating configuration page`);
+    return this.getFilterDefinitioTextArea().isPresent();
+  }
+
+  setFilter(filterCondition: string): P<any> {
+    log.info(`setting integration filter step condition to ${filterCondition}`);
+    return this.rootElement().$(IntegrationConfigureFilterStepPage.filterSelector).sendKeys(filterCondition);
+  }
+
+  getFilterDefinitioTextArea(): ElementFinder {
+    log.debug(`searching filter definition text area`);
+    return this.rootElement().$(IntegrationConfigureFilterStepPage.filterSelector);
+  }
 }
 
 

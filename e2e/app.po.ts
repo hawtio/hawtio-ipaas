@@ -103,7 +103,9 @@ export class AppPage {
 
   clickButton(buttonTitle: string): P<any> {
     log.info(`clicking button ${buttonTitle}`);
-    return this.getButton(buttonTitle).click();
+    const buttonElement = this.getButton(buttonTitle);
+    this.waitForElementToBePresent(buttonElement);
+    return buttonElement.click();
   }
 
   getLink(linkTitle: string): ElementFinder {
@@ -193,6 +195,16 @@ export class AppPage {
         callback(data);
       });
     }).then(jsonString => JSON.parse(<string> jsonString));
+  }
+
+  waitForElementToBePresent(element) {
+    browser.wait(function () {
+        return element.isPresent();
+    }, 60000);
+
+    browser.wait(function () {
+        return element.isDisplayed();
+    }, 60000);
   }
 
   async getApiUrl(): P<string> {
