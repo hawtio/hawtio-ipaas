@@ -10,6 +10,7 @@ import {
   TabsModule,
 } from 'ngx-bootstrap';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { CodemirrorModule } from 'ng2-codemirror';
 import { DataMapperModule } from 'syndesis.data.mapper';
 
 import { DynamicFormsPatternflyUIModule } from '../common/ui-patternfly/ui-patternfly.module';
@@ -23,6 +24,7 @@ import { IntegrationsSaveOrAddStepComponent } from './edit-page/save-or-add-step
 import { IntegrationsStepSelectComponent } from './edit-page/step-select/step-select.component';
 import { IntegrationsStepConfigureComponent } from './edit-page/step-configure/step-configure.component';
 import { DataMapperHostComponent } from './edit-page/step-configure/data-mapper/data-mapper-host.component';
+import { AdvancedFilterComponent } from './edit-page/step-configure/filter-steps/advanced-filter.component';
 import { BasicFilterComponent } from './edit-page/step-configure/filter-steps/basic-filter.component';
 import { ListActionsComponent } from './edit-page/list-actions/list-actions.component';
 import { IntegrationsListPage } from './list-page/list-page.component';
@@ -86,11 +88,13 @@ const routes: Routes = [
     TooltipModule,
     ModalModule,
     PopoverModule,
+    CodemirrorModule,
     DataMapperModule,
     IntegrationActionsModule,
   ],
   declarations: [
     DataMapperHostComponent,
+    AdvancedFilterComponent,
     BasicFilterComponent,
     IntegrationsConfigureActionComponent,
     IntegrationsEditPage,
