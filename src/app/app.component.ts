@@ -41,7 +41,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   loggedIn = false;
   title = 'Syndesis';
-  url = 'https://www.twitter.com/jboss';
+  url = 'https://www.twitter.com/syndesisio';
   user: Observable<User>;
 
   notifications: Notification[];

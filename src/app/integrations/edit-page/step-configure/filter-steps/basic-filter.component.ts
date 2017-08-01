@@ -68,12 +68,16 @@ export class BasicFilterComponent implements OnInit {
     this.predicateControl = this.formGroup.get('filterSettingsGroup').get('predicate') as FormControl;
     this.predicateModel = this.formService.findById('predicate', this.basicFilterModel) as DynamicInputModel;
 
-    this.rulesArrayControl = this.formGroup.get('rulesGroup').get('rulesFormArray') as FormArray;
-    this.rulesArrayModel = this.formService.findById('rulesFormArray', this.basicFilterModel) as DynamicFormArrayModel;
+    //this.rulesArrayControl = this.formGroup.get('rulesGroup').get('rulesFormArray') as FormArray;
+    //this.rulesArrayModel = this.formService.findById('rulesFormArray', this.basicFilterModel) as DynamicFormArrayModel;
   }
 
   // Manage Individual Fields
   add() {
+    this.rulesArrayControl = this.formGroup.get('rulesGroup').get('rulesFormArray') as FormArray;
+    this.rulesArrayModel = this.basicFilterModel[1] as DynamicFormArrayModel;
+    //console.log('this.rulesArrayControl: ' + this.rulesArrayControl);
+    //console.log('this.rulesArrayModel: ' + JSON.stringify(this.rulesArrayModel));
     this.formService.addFormArrayGroup(this.rulesArrayControl, this.rulesArrayModel);
   }
 
