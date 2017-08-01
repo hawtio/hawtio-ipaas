@@ -1122,7 +1122,7 @@ codelyzer@^2.1.1:
     source-map "^0.5.6"
     sprintf-js "^1.0.3"
 
-codemirror@^5.22.2:
+codemirror@^5.22.2, codemirror@^5.28.0:
   version "5.28.0"
   resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.28.0.tgz#2978d9280d671351a4f5737d06bbd681a0fd6f83"
 
