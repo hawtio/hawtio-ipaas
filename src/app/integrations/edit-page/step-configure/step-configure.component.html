@@ -9,7 +9,9 @@
           <div class="toolbar-pf-actions">
             <div class="inline-block">
               <ol class="breadcrumb">
-                <li><a [routerLink]="['/']"><i class="fa fa-angle-double-left"></i> Dashboard</a></li>
+                <li>
+                  <a [routerLink]="['/']"><i class="fa fa-angle-double-left"></i> Dashboard</a>
+                </li>
                 <li class="active">Configure {{ step.stepKind }}</li>
               </ol>
             </div>
@@ -32,6 +34,15 @@
           <div class="row">
             <div class="col-md-12">
               <syndesis-data-mapper-host></syndesis-data-mapper-host>
+            </div>
+          </div>
+        </div>
+        <div *ngSwitchCase="'advanced-filter'">
+          <div class="row">
+            <div class="col-md-12">
+              <syndesis-advanced-filter [(advancedFilterObject)]="filterForm"
+                                        [(step)]="step"
+                                        [position]="position"></syndesis-advanced-filter>
             </div>
           </div>
         </div>
