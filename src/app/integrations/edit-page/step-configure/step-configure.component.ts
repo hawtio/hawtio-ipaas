@@ -94,6 +94,8 @@ export class IntegrationsStepConfigureComponent extends FlowPage
 
   getToolbarClass() {
     switch (this.currentFlow.getStep(this.position).stepKind) {
+      case 'advanced-filter':
+        return 'toolbar advanced-filter';
       case 'basic-filter':
         return 'toolbar basic-filter';
       case 'mapper':
@@ -135,6 +137,11 @@ export class IntegrationsStepConfigureComponent extends FlowPage
         }
         // Now check if we've a custom view for this step kind
         switch (step.stepKind) {
+          case 'advanced-filter':
+            this.filterForm = this.getConfiguredProperties(step.configuredProperties || {});
+            log.info('step: ' + JSON.stringify(step));
+            log.info('this.filterForm: ' + JSON.stringify(this.filterForm));
+            return;
           case 'basic-filter':
             this.filterForm = this.getConfiguredProperties(step.configuredProperties || {});
             log.info('step: ' + JSON.stringify(step));

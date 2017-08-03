@@ -46,6 +46,8 @@ export class IntegrationsStepSelectComponent extends FlowPage
         return 'Log';
       case 'mapper':
         return 'Data Mapper';
+      case 'advanced-filter':
+        return 'Advanced Filter';
       case 'basic-filter':
         return 'Basic Filter';
       default:
