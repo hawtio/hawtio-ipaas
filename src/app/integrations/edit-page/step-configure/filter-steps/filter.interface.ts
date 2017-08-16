@@ -5,6 +5,12 @@ export interface BasicFilter {
   rules?: Rule[];
 }
 
+export interface AdvancedFilter {
+  config?: string;
+  simple?: string;
+  type: string;
+}
+
 export interface Rule {
   path: string;
   op?: string;
