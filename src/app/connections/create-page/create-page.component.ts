@@ -184,7 +184,7 @@ export class ConnectionsCreatePage implements OnInit, OnDestroy {
       }
       this.current.connection = connection;
     });
-    this.nav.hide();
+    this.nav.collapse();
     this.routerEventsSubscription = this.router.events.subscribe(event => {
       this.detector.detectChanges();
     });
@@ -192,7 +192,7 @@ export class ConnectionsCreatePage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.current.dispose();
-    this.nav.show();
+    this.nav.expand();
     this.routerEventsSubscription.unsubscribe();
   }
 }
