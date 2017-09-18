@@ -135,11 +135,11 @@ export class IntegrationsEditPage extends ChildAwarePage
         }
       },
     );
-    this.nav.hide();
+    this.nav.collapse();
   }
 
   ngOnDestroy() {
-    this.nav.show();
+    this.nav.expand();
     this.integrationSubscription.unsubscribe();
     this.routeSubscription.unsubscribe();
     if (this.flowSubscription) {

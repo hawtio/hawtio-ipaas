@@ -9,17 +9,19 @@ export class NavigationService {
     $.fn.setupVerticalNavigation ? $.fn.setupVerticalNavigation() : '';
   }
 
-  show() {
-    $.fn.setupVerticalNavigation
-      ? $.fn.setupVerticalNavigation().showMenu()
-      : '';
+  expand() {
+    const navElement = $('.nav-pf-vertical');
+    const bodyContentElement = $('.container-pf-nav-pf-vertical');
+
+    navElement.removeClass('collapsed');
+    bodyContentElement.removeClass('collapsed-nav');
   }
 
-  hide() {
-    $.fn.setupVerticalNavigation
-      ? $.fn.setupVerticalNavigation().hideMenu()
-      : '';
+  collapse() {
+    const navElement = $('.nav-pf-vertical');
+    const bodyContentElement = $('.container-pf-nav-pf-vertical');
 
+    navElement.addClass('collapsed');
+    bodyContentElement.addClass('collapsed-nav');
   }
-
 }
