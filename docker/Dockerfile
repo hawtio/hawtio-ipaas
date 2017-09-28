@@ -1,46 +1,49 @@
 FROM docker.io/centos:7
 
-ENV NGINX_VERSION 1.13.4-1.el7
+ENV NGINX_CONFIGURATION_PATH=/opt/app-root/etc/nginx.d
+ENV NGINX_DEFAULT_CONF_PATH=/opt/app-root/etc/nginx.default.d
+ENV APP_ROOT=/opt/app-root 
 
-LABEL name="nginxinc/nginx" \
+LABEL name="syndesisio/syndesis-ui" \
       maintainer="Syndesis Authors <syndesis@googlegroups.com>" \
-      vendor="NGINX Inc." \
-      version="${NGINX_VERSION}" \
+      version="1.0" \
       release="1" \
-      summary="NGINX" \
-      description="nginx will do ....." \
-### Required labels above - recommended below
-      url="https://www.nginx.com/" \
-      io.k8s.display-name="NGINX" \
+      architecture="x86_64" \
+      summary="User interface component for syndesis" \
+      description="User interface component for syndesis" \
+      com.redhat.component="syndesis-ui-docker" \
+      io.k8s.display-name="Syndesis - UI" \
+      io.k8s.description="User interface component for syndesis" \
       io.openshift.expose-services="http:8080" \
-      io.openshift.tags="nginx,nginxinc"
+      io.openshift.tags="syndesis,Syndesis,syndesis-ui"
 
-ADD docker/nginx.repo /etc/yum.repos.d/nginx.repo
+#Install RHSCL repo and cleanup
+RUN yum install -y centos-release-scl && yum install -y rh-nginx110
 
-RUN curl -sO http://nginx.org/keys/nginx_signing.key && \
-    rpm --import ./nginx_signing.key && \
-    yum -y install --setopt=tsflags=nodocs nginx-${NGINX_VERSION}.ngx && \
-    rm -f ./nginx_signing.key && \
-    yum clean all
+COPY ./docker/root/ /
+RUN sed -i -f $APP_ROOT/nginxconf.sed /etc/opt/rh/rh-nginx110/nginx/nginx.conf && \
+    mkdir -p $APP_ROOT/etc/nginx.d/ && \
+    mkdir -p $APP_ROOT/etc/nginx.default.d/ && \
+    chmod -R a+rwx $APP_ROOT/etc && \
+    chmod -R a+rwx /var/opt/rh/rh-nginx110 && \
+    chown -R 1001:0 /opt/app-root && \
+    chown -R 1001:0 /var/opt/rh/rh-nginx110
 
-# forward request and error logs to docker log collector
-RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
-    ln -sf /dev/stderr /var/log/nginx/error.log && \
-# Change pid file location & remove nginx user & change port to 8080
-    sed -i 's/\/var\/run\/nginx.pid/\/var\/cache\/nginx\/nginx.pid/g' /etc/nginx/nginx.conf && \
-    sed -i -e '/user/!b' -e '/nginx/!b' -e '/nginx/d' /etc/nginx/nginx.conf && \
-    rm -f /etc/nginx/conf.d/default.conf && \
-# modify perms for non-root runtime
-    chown -R 998 /var/cache/nginx /etc/nginx && \
-    chmod -R g=u /var/cache/nginx /etc/nginx
+RUN source scl_source enable rh-nginx110
 
-#VOLUME ["/var/cache/nginx"]
+#COPY dist 
+COPY dist $APP_ROOT/src/
 
 EXPOSE 8080 8443
 
-USER 998
+USER 1001
 
-CMD ["nginx", "-g", "daemon off;"]
+ENV BASH_ENV=$APP_ROOT/etc/scl_enable \
+    APP_ROOT=$APP_ROOT \
+    ENV=$APP_ROOT/etc/scl_enable \
+    PROMPT_COMMAND=". $APP_ROOT/etc/scl_enable"
 
-COPY docker/nginx-syndesis.conf /etc/nginx/conf.d
-COPY dist /usr/share/nginx/html
+#Volume for config.json
+VOLUME /opt/app-root/src/
+
+CMD ["/opt/app-root/etc/nginx_run"]
