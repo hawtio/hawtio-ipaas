@@ -92,6 +92,24 @@ export class IntegrationsConfigureActionComponent extends FlowPage
       onSave: () => {
         if (!this.lastPage || this.page >= this.lastPage) {
           // all done...
+          this.integrationSupport.fetchMetadata(
+            this.step.connection,
+            this.step.action,
+            this.step.configuredProperties || {},
+          )
+          .toPromise()
+          .then(response => {
+            log.debug('Response: ' + JSON.stringify(response, undefined, 2));
+            const definition: any = response['_body']
+              ? JSON.parse(response['_body'])
+              : undefined;
+            this.step.action.inputDataShape = definition.inputDataShape;
+            this.step.action.outputDataShape = definition.outputDataShape;
+          })
+          .catch(response => {
+            // TODO error handling
+          });
+
           this.router.navigate(['save-or-add-step'], {
             queryParams: { validate: true },
             relativeTo: this.route.parent,
