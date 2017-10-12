@@ -149,7 +149,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       showClose: true,
     });
     this.loggedIn =  false;
-    return this.userService.logout();
+    return this.oauthService.logOut();
   }
 
   /**
