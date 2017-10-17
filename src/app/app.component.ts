@@ -13,6 +13,7 @@ import {
   Notification,
   NotificationEvent,
   NotificationService,
+  NotificationType,
 } from 'patternfly-ng';
 
 import { TestSupportService } from './store/test-support.service';
@@ -138,6 +139,20 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   /**
+   * Function that calls UserService to log the user out.
+   */
+  logout() {
+    this.popNotification({
+      type: NotificationType.SUCCESS,
+      header: 'Logout Successful',
+      message: 'You\'ve successfully been logged out.',
+      showClose: true,
+    });
+    this.loggedIn =  false;
+    return this.oauthService.logOut();
+  }
+
+  /**
    * Function that resets the database.
    */
   resetDB() {
@@ -194,6 +209,19 @@ export class AppComponent implements OnInit, AfterViewInit {
    */
   handleClose($event: NotificationEvent): void {
     this.notificationService.remove($event.notification);
+  }
+
+  //-----  Toast ------------------->>
+
+  popNotification(notification) {
+    this.notificationService.message(
+      notification.type,
+      notification.header,
+      notification.message,
+      false,
+      null,
+      [],
+    );
   }
 
   ngAfterViewInit() {
